@@ -5,9 +5,9 @@ import { parseFilesConfig } from './parseFilesConfig';
 describe('parseFilesConfig', () => {
   it('parses full configuration correctly', () => {
     const envStr =
-      'embedding_model=openai/embedding-text-3-small,reranker_model=cohere/rerank-english-v3.0,query_mode=full_text';
+      'embedding_model=openai/text-embedding-3-small,reranker_model=cohere/rerank-english-v3.0,query_mode=full_text';
     const expected = {
-      embeddingModel: { provider: 'openai', model: 'embedding-text-3-small' },
+      embeddingModel: { provider: 'openai', model: 'text-embedding-3-small' },
       rerankerModel: { provider: 'cohere', model: 'rerank-english-v3.0' },
       queryMode: 'full_text',
     };
@@ -16,9 +16,9 @@ describe('parseFilesConfig', () => {
 
   // 测试embeddings配置是否被正确解析
   it('parses embeddings configuration correctly', () => {
-    const envStr = 'embedding_model=openai/embedding-text-3-large';
+    const envStr = 'embedding_model=openai/text-embedding-3-large';
     const expected = {
-      embeddingModel: { provider: 'openai', model: 'embedding-text-3-large' },
+      embeddingModel: { provider: 'openai', model: 'text-embedding-3-large' },
     };
     expect(parseFilesConfig(envStr)).toEqual(expected);
   });
@@ -49,19 +49,19 @@ describe('parseFilesConfig', () => {
   });
 
   it('parses queryMode embeddings configuration correctly', () => {
-    const envStr = 'embedding_model=openai/embedding-text-3-small,query_mode=full_text';
+    const envStr = 'embedding_model=openai/text-embedding-3-small,query_mode=full_text';
     const expected = {
       queryMode: 'full_text',
-      embeddingModel: { provider: 'openai', model: 'embedding-text-3-small' },
+      embeddingModel: { provider: 'openai', model: 'text-embedding-3-small' },
     };
     expect(parseFilesConfig(envStr)).toEqual(expected);
   });
 
   it('parses rerank embeddings configuration correctly', () => {
     const envStr =
-      'reranker_model=cohere/rerank-english-v3.0,embedding_model=openai/embedding-text-3-small';
+      'reranker_model=cohere/rerank-english-v3.0,embedding_model=openai/text-embedding-3-small';
     const expected = {
-      embeddingModel: { provider: 'openai', model: 'embedding-text-3-small' },
+      embeddingModel: { provider: 'openai', model: 'text-embedding-3-small' },
       rerankerModel: { provider: 'cohere', model: 'rerank-english-v3.0' },
     };
     expect(parseFilesConfig(envStr)).toEqual(expected);
@@ -69,7 +69,7 @@ describe('parseFilesConfig', () => {
 
   it('should throw an error for invalid embedding_model format', () => {
     const envStr =
-      'reranker_model=cohere/rerank-english-v3.0,embedding_model=/embedding-text-3-small';
+      'reranker_model=cohere/rerank-english-v3.0,embedding_model=/text-embedding-3-small';
     expect(() => {
       parseFilesConfig(envStr);
     }).toThrow(
@@ -99,7 +99,7 @@ describe('parseFilesConfig', () => {
 
   it('should throw an error for invalid reranker_model format', () => {
     const envStr =
-      'reranker_model=/rerank-english-v3.0,embedding_model=openai/embedding-text-3-small';
+      'reranker_model=/rerank-english-v3.0,embedding_model=openai/text-embedding-3-small';
     expect(() => {
       parseFilesConfig(envStr);
     }).toThrow(
@@ -110,7 +110,7 @@ describe('parseFilesConfig', () => {
   });
 
   it('should throw an error for invalid reranker_model format', () => {
-    const envStr = 'reranker_model=cohere/,embedding_model=openai/embedding-text-3-small';
+    const envStr = 'reranker_model=cohere/,embedding_model=openai/text-embedding-3-small';
     expect(() => {
       parseFilesConfig(envStr);
     }).toThrow(
@@ -121,7 +121,7 @@ describe('parseFilesConfig', () => {
   });
 
   it('should throw an error for invalid reranker_model format', () => {
-    const envStr = 'reranker_model=,embedding_model=openai/embedding-text-3-small';
+    const envStr = 'reranker_model=,embedding_model=openai/text-embedding-3-small';
     expect(() => {
       parseFilesConfig(envStr);
     }).toThrow(new Error('Invalid environment variable format.'));
